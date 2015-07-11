@@ -1,9 +1,8 @@
 # plot1.R
-plot1 <- function()
   # download data
   url <-
     "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip"
-  download(url, "exdata-data-household_power_consumption.zip", mode = "wb")
+  download.file(url, destfile = "exdata-data-household_power_consumption.zip", mode = "wb")
   unlink(url)
   
   # and extract file
@@ -20,11 +19,13 @@ plot1 <- function()
     as.Date(fullData$DateTime, format = "%d/%m/%Y %H:%M:%S")
   # filter data between "2007-02-01" and "2007-02-02"
   data <-
-    DT[which((fullData$DateTime >= "2007-02-01") &
+    fullData[which((fullData$DateTime >= "2007-02-01") &
                (fullData$DateTime < "2007-02-03")),]
   # fee space
   rm(fullData)
   
+  # get names in english
+  Sys.setlocale("LC_TIME", "English")
   
   # plot histogram
   windows()
