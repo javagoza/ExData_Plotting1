@@ -1,5 +1,8 @@
 # file: plot2.R
 
+# get dates in english
+Sys.setlocale("LC_TIME", "English")
+
 # download data if not downloaded before
 if(!file.exists("household_power_consumption.txt")){
   url <-
@@ -11,27 +14,24 @@ if(!file.exists("household_power_consumption.txt")){
   unzip("exdata-data-household_power_consumption.zip")
 }
 
+
 fullData <-
-  read.table(
-    "household_power_consumption.txt", sep = ";", header = TRUE, na.strings =
-      "?",  stringsAsFactors = FALSE
+  read.csv(
+    "household_power_consumption.txt", sep = ";", header = TRUE,
+    na.strings = "?",  stringsAsFactors = FALSE
   )
 
-# create date time column
-fullData$DateTime <-
-  strptime(paste(fullData$Date,fullData$Time), "%d/%m/%Y %H:%M:%S")
+# fiter data required
+data<-fullData[which( fullData$Date == "2/2/2007" | fullData$Date == "1/2/2007"),]
 
-# filter data between "2007-02-01" and "2007-02-02"
-data <-
-  fullData[which((fullData$DateTime >= "2007-02-01") &
-                   (fullData$DateTime < "2007-02-03")),]
 # fee space
 rm(fullData)
 
-# get names in english
-Sys.setlocale("LC_TIME", "English")
+# create date time column and copy date time
+data$DateTime <-
+  strptime(paste(data$Date,data$Time), "%d/%m/%Y %H:%M:%S")
 
-# plot histogram
+# plot graph
 windows()
 with(
   data, plot(
