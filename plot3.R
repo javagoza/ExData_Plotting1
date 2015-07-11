@@ -1,4 +1,4 @@
-# file: plot2.R
+# file: plot3.R
 
 # download data if not downloaded before
 if(!file.exists("household_power_consumption.txt")){
@@ -10,6 +10,7 @@ if(!file.exists("household_power_consumption.txt")){
   # and extract file
   unzip("exdata-data-household_power_consumption.zip")
 }
+
 
 fullData <-
   read.table(
@@ -33,14 +34,14 @@ Sys.setlocale("LC_TIME", "English")
 
 # plot histogram
 windows()
-with(
-  data, plot(
-    DateTime, Global_active_power, 
-    xlab = "", ylab = "Global Active Power (kiloWatts)", 
-    type = "l"
-  )
-)
+with(data, plot(DateTime, Sub_metering_1,
+    xlab = "", ylab = "Energy sub metering",
+    type = "l", col="black"))
 
-dev.copy(png ,file = "plot2.png", width = 480, height = 480)
+with(data, lines(DateTime, Sub_metering_2, col="red" ))
+with(data, lines(DateTime, Sub_metering_3, col="blue"))
+legend("topright", lty = 1, col = c("black","red", "blue"), legend = c("Sub_metering_1", "Sub_metering_2",  "Sub_metering_3"))
+
+dev.copy(png ,file = "plot3.png", width = 480, height = 480)
 dev.off()
   

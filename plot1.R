@@ -1,5 +1,7 @@
-# plot1.R
-  # download data
+# file: plot3.R
+
+# download data if not downloaded before
+if(!file.exists("household_power_consumption.txt")){
   url <-
     "https://d396qusza40orc.cloudfront.net/exdata%2Fdata%2Fhousehold_power_consumption.zip"
   download.file(url, destfile = "exdata-data-household_power_consumption.zip", mode = "wb")
@@ -7,8 +9,9 @@
   
   # and extract file
   unzip("exdata-data-household_power_consumption.zip")
-  
-  fullData <-
+}
+
+fullData <-
     read.table(
       "household_power_consumption.txt", sep = ";", header = TRUE, na.strings =
         "?",  stringsAsFactors = FALSE
