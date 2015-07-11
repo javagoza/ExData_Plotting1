@@ -31,8 +31,8 @@ rm(fullData)
 data$DateTime <-
   strptime(paste(data$Date,data$Time), "%d/%m/%Y %H:%M:%S")
 
-# plot graphs
-windows()
+# plot graphs in png directly to avoid problems copying from screen
+png("plot4.png", width=480, height=480)
 
 par(mfrow = c(2,2))
 
@@ -61,7 +61,7 @@ with(data, plot(DateTime, Sub_metering_1,
 
 with(data, lines(DateTime, Sub_metering_2, col="red" ))
 with(data, lines(DateTime, Sub_metering_3, col="blue"))
-legend("topright", bty ="n", cex =1 , lty = 1, col = c("black","red", "blue"), legend = c("Sub_metering_1", "Sub_metering_2",  "Sub_metering_3"))
+legend("topright", bty ="n", lty = 1, col = c("black","red", "blue"), legend = c("Sub_metering_1", "Sub_metering_2",  "Sub_metering_3"))
 
 # Plot Global_Reactive_Power
 with(
@@ -72,6 +72,5 @@ with(
   )
 )
 
-dev.copy(png ,file = "plot4.png", width = 480, height = 480)
 dev.off()
   
